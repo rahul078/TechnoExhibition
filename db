@@ -1,0 +1,4 @@
+GRANT ALL PRIVILEGES ON *.* TO 'Techno_organizers'@'localhost' IDENTIFIED BY 'SecuredPwd';
+CREATE DATABASE Applied_candidates;
+
+create table candidate_list(project_name varchar(30) primary key,name varchar(20),email varchar(30),phone varchar(15),file_url varchar(100),college_name varchar(20));

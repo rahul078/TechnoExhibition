@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  #custom_table {
+font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+
+#custom_table td, #custom_table th {
+border: 1px solid #ddd;
+padding: 8px;
+}
+
+#custom_table tr:nth-child(even){background-color: #f2f2f2;}
+
+#custom_table tr:hover {background-color: #ddd;}
+
+#custom_table th {
+padding-top: 12px;
+padding-bottom: 12px;
+text-align: left;
+background-color: #4CAF50;
+color: white;
+}
+</style>
+<script type="text/javascript">
+function secure()
+{
+  var pwd=prompt("Enter password","");
+  if(pwd!="SecurePwd")
+    {
+      window.location.href = "index.html";
+    }
+}
+
+</script>
+</head>
+<body>
+  <script>secure();</script>
+<center>
+  <form action="export.php" method="post">
+    <input type="submit" name="export" value="Download Table" style="background-color:#4CAF50; padding:1em; font-size:15px;">
+  </form>
+</center>
+<br /><br />
+  <?php
+  $conn = mysqli_connect("localhost", "Techno_organizers", "SecuredPwd","Applied_candidates");
+  if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
+  $sql = "SELECT * FROM candidate_list";
+  $result = mysqli_query($conn, $sql);
+
+  if (mysqli_num_rows($result) > 0) {
+    ?>
+    <div id="custom_table_div">
+    <table id="custom_table">
+      <tr>
+        <th>name</th>
+        <th>email</th>
+        <th>College</th>
+        <th>Phone</th>
+        <th>File Name</th>
+      </tr><?php
+      // output data of each row
+      while($row = mysqli_fetch_assoc($result)) {
+          ?>
+          <tr>
+            <td><?php echo $row['name'] ?></td>
+
+            <td><?php echo $row['email'] ?></td>
+
+            <td><?php echo $row['college_name'] ?></td>
+
+            <td><?php echo $row['phone'] ?></td>
+
+            <td><?php echo $row['file_url'] ?></td>
+          </tr>
+          <?php
+      }
+  } else {
+      echo "No Registrations yet";
+  }
+
+  ?>
+  </table>
+</div>
+</body>
+</html>
